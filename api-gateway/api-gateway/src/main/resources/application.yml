@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: http://localhost:3001
+          predicates:
+            - Path=/api/v1/user/**
+
+        - id: quiz-service
+          uri: http://localhost:3008
+          predicates:
+            - Path=/api/v1/quiz/**
+
+        - id: notification-service
+          uri: http://localhost:3009
+          predicates:
+            - Path=/api/v1/notification/**
+
+        - id: initial-quiz
+          uri: http://localhost:3005
+          predicates:
+            - Path=/api/v1/initial-quiz/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:3000/eureka/
+
+server:
+    port: 8082

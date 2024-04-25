@@ -1,0 +1,11 @@
+spring:
+  application:
+     name: initial-quiz
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:3000/eureka/
+
+server:
+    port: 3005

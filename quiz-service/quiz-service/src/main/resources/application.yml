@@ -1,0 +1,11 @@
+spring:
+  application:
+     name: quiz-sevice
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:3000/eureka/
+
+server:
+    port: 3008
