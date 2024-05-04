@@ -8,4 +8,4 @@ eureka:
       defaultZone: http://localhost:3000/eureka/
 
 server:
-    port: 3008
+    port: 4001

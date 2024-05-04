@@ -17,7 +17,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuizRequestModel {
-    private int id;
     private String title;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

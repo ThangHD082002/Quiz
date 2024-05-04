@@ -19,7 +19,8 @@ import quiz.com.quizservice.command.model.QuestionRequestModel;
 @Aggregate
 public class QuizAggregate {
     @AggregateIdentifier
-    private int id;
+    private String idIndentify;
+
     private String title;
     
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -40,7 +41,7 @@ public class QuizAggregate {
 
     @EventSourcingHandler
     public void on(QuizCreateEvent event){
-        this.id = event.getId();
+        this.idIndentify = event.getIdentify();
         this.title = event.getTitle();
         this.state = event.getState();
         this.timeStart = event.getTimeStart();

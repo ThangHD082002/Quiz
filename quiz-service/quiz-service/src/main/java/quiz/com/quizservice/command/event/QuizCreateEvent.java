@@ -17,7 +17,7 @@ import quiz.com.quizservice.command.model.QuestionRequestModel;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuizCreateEvent {
-    private int id;
+    private String identify;
     private String title;
    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timeStart;

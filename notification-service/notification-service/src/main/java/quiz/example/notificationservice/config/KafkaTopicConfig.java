@@ -10,8 +10,14 @@ public class KafkaTopicConfig {
 
 
     @Bean
-    public NewTopic javaguidesTopic(){
-        return TopicBuilder.name("javaguides")
+    public NewTopic successTopic(){
+        return TopicBuilder.name("successTopic")
+                .build();
+    }
+
+    @Bean
+    public NewTopic faildTopic(){
+        return TopicBuilder.name("faildTopic")
                 .build();
     }
 

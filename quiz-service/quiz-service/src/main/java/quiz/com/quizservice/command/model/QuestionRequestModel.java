@@ -14,7 +14,6 @@ import quiz.com.quizservice.command.entity.Quiz;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionRequestModel {
-    private int id;
     private String titleQuestion;
     private String option1;
     private String option2;
