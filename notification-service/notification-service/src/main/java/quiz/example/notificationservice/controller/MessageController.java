@@ -16,49 +16,49 @@ import quiz.example.notificationservice.kafka.KafkaProducer;
 @RestController
 @RequestMapping("/api/v1/kafka")
 public class MessageController {
-    private KafkaProducer kafkaProducer;
+    // private KafkaProducer kafkaProducer;
 
 
 
-    public MessageController(KafkaProducer kafkaProducer) {
-        this.kafkaProducer = kafkaProducer;
-    }
-
-
-    // http:localhost:3009/api/v1/kafka/publish?message=hello world
-    // @GetMapping("/publish")
-    // public ResponseEntity< String> publish(@RequestParam("message") String message) {
-    //     kafkaProducer.sendMessage(message);
-    //     return ResponseEntity.ok("Message sented to the topic");
-
+    // public MessageController(KafkaProducer kafkaProducer) {
+    //     this.kafkaProducer = kafkaProducer;
     // }
 
-    @GetMapping("/say")
-    public String hello() {
-        return "hello notification";
-    }
 
-    @PostMapping("/send-success")
-    public ResponseEntity<String> sendSuccessNotification(@RequestParam("message") String message) {
-        try {
-            String id = UUID.randomUUID().toString();
-            kafkaProducer.sendMessageSuccess(message + " ( " + id  +" ) ");
-            return ResponseEntity.ok("Message sent to success topic");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send message to success topic");
-        }
-    }
+    // // http:localhost:3009/api/v1/kafka/publish?message=hello world
+    // // @GetMapping("/publish")
+    // // public ResponseEntity< String> publish(@RequestParam("message") String message) {
+    // //     kafkaProducer.sendMessage(message);
+    // //     return ResponseEntity.ok("Message sented to the topic");
 
-    @PostMapping("/send-fail")
-    public ResponseEntity<String> sendFailNotification(@RequestParam("message") String message) {
-        try {
-            String id = UUID.randomUUID().toString();
-            kafkaProducer.sendMessageFaild(message + " ( " + id  +" ) ");
-            return ResponseEntity.ok("Message sent to fail topic");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send message to fail topic");
-        }
-    }
+    // // }
+
+    // @GetMapping("/say")
+    // public String hello() {
+    //     return "hello notification";
+    // }
+
+    // @PostMapping("/send-success")
+    // public ResponseEntity<String> sendSuccessNotification(@RequestParam("message") String message) {
+    //     try {
+    //         String id = UUID.randomUUID().toString();
+    //         kafkaProducer.sendMessageSuccess(message + " ( " + id  +" ) ");
+    //         return ResponseEntity.ok("Message sent to success topic");
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send message to success topic");
+    //     }
+    // }
+
+    // @PostMapping("/send-fail")
+    // public ResponseEntity<String> sendFailNotification(@RequestParam("message") String message) {
+    //     try {
+    //         String id = UUID.randomUUID().toString();
+    //         kafkaProducer.sendMessageFaild(message + " ( " + id  +" ) ");
+    //         return ResponseEntity.ok("Message sent to fail topic");
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send message to fail topic");
+    //     }
+    // }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class NotificationExcelService {
-     private final String NOTIFICATION_SERVICE_URL = "http://localhost:4003/api/v1/kafka";
+    private final String NOTIFICATION_SERVICE_URL = "http://localhost:4003/api/v1/socket";
 
     private final RestTemplate restTemplate;
 
@@ -31,7 +31,7 @@ public class NotificationExcelService {
     }
 
     public ResponseEntity<String> sendFailNotification(String message) {
-        String url = NOTIFICATION_SERVICE_URL + "/send-fail?message=" + message;
+        String url = NOTIFICATION_SERVICE_URL + "/send-faild?message=" + message;
         // ResponseEntity<String> response = restTemplate.postForEntity(url, null, String.class);
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 url,

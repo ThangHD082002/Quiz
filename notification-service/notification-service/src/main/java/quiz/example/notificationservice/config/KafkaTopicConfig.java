@@ -9,16 +9,16 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
 
-    @Bean
-    public NewTopic successTopic(){
-        return TopicBuilder.name("successTopic")
-                .build();
-    }
+    // @Bean
+    // public NewTopic successTopic(){
+    //     return TopicBuilder.name("successTopic")
+    //             .build();
+    // }
 
-    @Bean
-    public NewTopic faildTopic(){
-        return TopicBuilder.name("faildTopic")
-                .build();
-    }
+    // @Bean
+    // public NewTopic faildTopic(){
+    //     return TopicBuilder.name("faildTopic")
+    //             .build();
+    // }
 
 }

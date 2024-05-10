@@ -7,21 +7,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class KafkaProducer {
-    private KafkaTemplate<String,String> kafkaTemplate;
+    // private KafkaTemplate<String,String> kafkaTemplate;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
+    // private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
-    public KafkaProducer(KafkaTemplate<String,String> kafkaTemplate){
-        this.kafkaTemplate = kafkaTemplate;
-    }
+    // public KafkaProducer(KafkaTemplate<String,String> kafkaTemplate){
+    //     this.kafkaTemplate = kafkaTemplate;
+    // }
 
-    public void sendMessageSuccess(String message){
-        LOGGER.info(String.format("Message sent %s", message));
-        kafkaTemplate.send("successTopic", message);
-    }
+    // public void sendMessageSuccess(String message){
+    //     LOGGER.info(String.format("Message sent %s", message));
+    //     kafkaTemplate.send("successTopic", message);
+    // }
 
-    public void sendMessageFaild(String message){
-        LOGGER.info(String.format("Message sent %s", message));
-        kafkaTemplate.send("faildTopic", message);
-    }
+    // public void sendMessageFaild(String message){
+    //     LOGGER.info(String.format("Message sent %s", message));
+    //     kafkaTemplate.send("faildTopic", message);
+    // }
 }
