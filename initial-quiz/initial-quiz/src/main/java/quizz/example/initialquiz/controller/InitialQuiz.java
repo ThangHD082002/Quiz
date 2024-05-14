@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -102,6 +104,8 @@ public class InitialQuiz {
     //     }
     // }
 
+    CompletableFuture<ResponseEntity<List<Question>>> resultFuture = new CompletableFuture<>();
+
     Runnable sendSuccessQuiz = () -> {
         notificationExcelService.sendSuccessNotification("Create quiz success");
     };
@@ -129,7 +133,7 @@ public class InitialQuiz {
     };
 
     @PostMapping("/upload-excel")
-    public ResponseEntity<List<Question>> uploadExcelFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<List<Question>> uploadExcelFile(@RequestParam("file") MultipartFile file) throws IOException, InterruptedException, ExecutionException {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     try {
         ResponseEntity<String> excelFileVerification = verificationExcelService.checkExcelFile(file);
@@ -142,7 +146,19 @@ public class InitialQuiz {
                 // notificationExcelService.sendSuccessNotification("Create quiz success");
                 executor.schedule(sendSuccessValidExcel, 6, TimeUnit.SECONDS);
                 executor.schedule(sendSuccessQuiz, 9, TimeUnit.SECONDS);
-                return verificationExcelService.uploadExcelFile(file);
+                Runnable uploadTask = () -> {
+                    try {
+                        ResponseEntity<List<Question>> response = verificationExcelService.uploadExcelFile(file);
+                        resultFuture.complete(response);
+                    } catch (Exception e) {
+                        resultFuture.completeExceptionally(e);
+                    }
+                };
+                executor.schedule(uploadTask, 12, TimeUnit.SECONDS);
+
+                // Chờ kết quả của CompletableFuture
+                return resultFuture.get(); // Blocking call to get the result
+                // return verificationExcelService.uploadExcelFile(file);
             } else {
                 // notificationExcelService.sendFailNotification("Invalid data in Excel file");
                 executor.schedule(sendFailValidExcel, 6, TimeUnit.SECONDS);

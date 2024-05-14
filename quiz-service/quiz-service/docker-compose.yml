@@ -1,0 +1,42 @@
+services:
+  api_service:
+    build: .
+    restart: always
+    ports:
+      - 4001:4001
+    networks:
+      - springapimysql-net
+      - axon-demo
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysqldb:3306/quiz_service?allowPublicKeyRetrieval=true
+      - axon.axonserver.servers=axonserver
+    depends_on:
+      - mysqldb
+      - axonserver
+    volumes:
+      - .m2:/root/.m2
+      
+  mysqldb:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - springapimysql-net
+    environment:
+      MYSQL_DATABASE: quiz_service
+      MYSQL_ROOT_PASSWORD: 27082002
+
+  axonserver:
+    image: axoniq/axonserver
+    hostname: axonserver
+    ports:
+      - '8024:8024'
+      - '8124:8124'
+      - '8224:8224'
+    networks:
+      - axon-demo
+
+networks:
+  springapimysql-net:
+  axon-demo:
