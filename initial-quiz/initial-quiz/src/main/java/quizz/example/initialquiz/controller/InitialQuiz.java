@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import quizz.example.initialquiz.request.Question;
+import quizz.example.initialquiz.request.QuizRequestModel;
 import quizz.example.initialquiz.service.NotificationExcelService;
 import quizz.example.initialquiz.service.UploadQuizExcelService;
 import quizz.example.initialquiz.service.VerificationExcelService;
@@ -27,6 +28,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -38,10 +41,13 @@ public class InitialQuiz {
 
     private NotificationExcelService notificationExcelService = null;
 
+    private UploadQuizExcelService  uploadQuizExcelService;
+
     @Autowired
-    public InitialQuiz(VerificationExcelService verificationExcelService, NotificationExcelService notificationExcelService) {
+    public InitialQuiz(VerificationExcelService verificationExcelService, NotificationExcelService notificationExcelService, UploadQuizExcelService  uploadQuizExcelService) {
         this.verificationExcelService = verificationExcelService;
         this.notificationExcelService = notificationExcelService;
+        this.uploadQuizExcelService = uploadQuizExcelService;
     }
 
     // @GetMapping("/call-quiz")
@@ -53,56 +59,6 @@ public class InitialQuiz {
     public String hello(){
         return "helo quiz";
     }
-
-    // @PostMapping("/upload-excel")
-    // public ResponseEntity<List<Question>> uploadExcelFile(@RequestParam("file") MultipartFile file) {
-    //     return uploadQuizExcelService.uploadExcelFile(file);
-    // }
-
-
-    // @PostMapping("/upload-excel")
-    // public ResponseEntity<List<Question>> uploadExcelFile(@RequestParam("file") MultipartFile file) {
-    //     // ResponseEntity<String> excelFileVerification = verificationExcelService.checkExcelFile(file);
-    //     // if (excelFileVerification.getStatusCode() == HttpStatus.OK) {
-    //     //     notificationExcelService.sendSuccessNotification("File is Excel");
-    //     //     ResponseEntity<String> excelDataVerification = verificationExcelService.checkExcelData(file);
-    //     //     if (excelDataVerification.getStatusCode() == HttpStatus.OK) {
-    //     //         notificationExcelService.sendSuccessNotification("Valid data in Excel file");
-    //     //     } else {
-    //     //         notificationExcelService.sendFailNotification("Invalid data in Excel file");
-    //     //         return ResponseEntity.badRequest().build();
-    //     //     }
-    //     //     notificationExcelService.sendSuccessNotification("Create quiz success");
-    //         return uploadQuizExcelService.uploadExcelFile(file);
-    //     // } else {
-    //     //     notificationExcelService.sendFailNotification("File is not an Excel file");
-    //     //     return ResponseEntity.badRequest().build();
-    //     // }
-    // }
-
-
-
-
-    // @PostMapping("/upload-excel")
-    // public ResponseEntity<List<Question>> uploadExcelFile(@RequestParam("file") MultipartFile file) throws IOException {
-    //     ResponseEntity<String> excelFileVerification = verificationExcelService.checkExcelFile(file);
-    //     if (excelFileVerification.getStatusCode() == HttpStatus.OK) {
-    //         notificationExcelService.sendSuccessNotification("File is Excel");
-    //         ResponseEntity<String> excelDataVerification = verificationExcelService.checkExcelData(file);
-    //         System.out.println("ERRORRRRRRRRR : " + excelDataVerification.getStatusCode());
-    //         if (excelDataVerification.getStatusCode() == HttpStatus.OK) {
-    //             notificationExcelService.sendSuccessNotification("Valid data in Excel file");
-    //         } else {
-    //             notificationExcelService.sendFailNotification("Invalid data in Excel file");
-    //             return ResponseEntity.badRequest().build();
-    //         }
-    //         notificationExcelService.sendSuccessNotification("Create quiz success");
-    //         return verificationExcelService.uploadExcelFile(file);
-    //     } else {
-    //         notificationExcelService.sendFailNotification("File is not an Excel file");
-    //         return ResponseEntity.badRequest().build();
-    //     }
-    // }
 
     CompletableFuture<ResponseEntity<List<Question>>> resultFuture = new CompletableFuture<>();
 
@@ -179,6 +135,14 @@ public class InitialQuiz {
         return ResponseEntity.badRequest().build();
     }
 }
+
+        @PostMapping("/upload-quiz-final")
+        public ResponseEntity<String> uploadQuiz(@RequestBody QuizRequestModel model) {
+            // Gọi service createQuiz
+            ResponseEntity<String> response = uploadQuizExcelService.createQuiz(model);
+            return response;
+        }
+
 
 }
 

@@ -1,4 +1,5 @@
-package verify.example.verificationservice.model;
+package quizz.example.initialquiz.request;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,9 +8,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Question {
+@AllArgsConstructor
+public class QuestionRequestModel {
     private String titleQuestion;
     private String option1;
     private String option2;

@@ -26,7 +26,7 @@ public class QuizCommandController {
     private CommandGateway commandGateway;
 
     @PostMapping("/create")
-    public String createQuiz(@RequestBody QuizRequestModel model) {
+    public ResponseEntity<String> createQuiz(@RequestBody QuizRequestModel model) {
         CreateQuizCommand command = new CreateQuizCommand(
                                                         UUID.randomUUID().toString(),     
                                                         model.getTitle(), 
@@ -36,7 +36,7 @@ public class QuizCommandController {
                                                         model.getListQuestion()
                                                         );
         commandGateway.sendAndWait(command);
-        return "added Quizz";
+        return ResponseEntity.ok("added Quizz");
     }
 
 

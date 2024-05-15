@@ -75,15 +75,15 @@ public class VerificationQuizController {
                 }
 
                 // Đọc giá trị từ các ô
-                String title = row.getCell(0).getStringCellValue();
+                String titleQuestion= row.getCell(0).getStringCellValue();
                 String option1 = row.getCell(1).getStringCellValue();
                 String option2 = row.getCell(2).getStringCellValue();
                 String option3 = row.getCell(3).getStringCellValue();
                 String option4 = row.getCell(4).getStringCellValue();
-                int rightAnswer = (int) row.getCell(5).getNumericCellValue();
+                String rightAnswer = row.getCell(4).getStringCellValue();
 
                 // Tạo câu hỏi mới và thêm vào danh sách
-                Question question = new Question(title, option1, option2, option3, option4, rightAnswer);
+                Question question = new Question(titleQuestion, option1, option2, option3, option4, rightAnswer);
                 questionList.add(question);
             }
 
